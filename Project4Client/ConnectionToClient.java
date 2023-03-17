@@ -1,15 +1,14 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.*;
 
 
 
-public class ConnectionToClient implements Runnable  // this class is used to receive messages from the server
+public class ConnectionToClient implements Runnable  // this class is used to create a new thread for each client
 {
-    ClientTalker clientTalker;
-    String id;  
-    Socket normalSocket;
+    ClientTalker clientTalker;  // this is the clientTalker that will be used to send messages to the server
+    String id;                  // this is the id of the client
+    Socket normalSocket;          
+    ServerTalker serverTalker;  // this is the serverTalker that will be used to receive messages from the server
 
     ConnectionToClient(Socket normalSocket, String id) throws IOException
     {
@@ -22,25 +21,18 @@ public class ConnectionToClient implements Runnable  // this class is used to re
     @Override
     public void run() 
     {
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(normalSocket.getInputStream()));
+        try 
+        {
+            serverTalker = new ServerTalker(normalSocket);
             while (true) 
             {
-                String message = in.readLine();               // read message from server
-                if(message !=null)
-                {
-                    System.out.println(message);             // print message to console
-                }
-                else
-                {
-                    System.out.println("Client has disconnected");
-                }
-                
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+                serverTalker.receiveMessage();
+            } 
         }
-    }
-     
+        catch (IOException e) 
+        {
+            System.out.println("Connection to server lost");
+        }
+}
 }
  

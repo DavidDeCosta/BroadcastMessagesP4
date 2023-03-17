@@ -102,10 +102,12 @@ public class MainFrameGUI extends JFrame
         else if(e.getActionCommand().equals("Send"))
         {
             String message = textField.getText();
-            try {
+            try 
+            {
                 clientTalker.sendMessage(message);
                 textField.setText("");                             //clears the text field
-            } catch (IOException ex) {
+            } catch (IOException ex) 
+            {
                 System.out.println("Failed to send message");
             }
         }     
