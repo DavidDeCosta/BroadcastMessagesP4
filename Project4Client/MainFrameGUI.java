@@ -24,8 +24,9 @@ public class MainFrameGUI extends JFrame
     String userID;
 
     Socket socket;
-    ClientTalker clientTalker;
     ConnectionToClient connectionToClient;
+
+    Talker talker;
 
     MainFrameGUI()
     {
@@ -62,7 +63,6 @@ public class MainFrameGUI extends JFrame
         dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL); 
         dialog.setVisible(true);
-        
 
     }
 
@@ -89,8 +89,8 @@ public class MainFrameGUI extends JFrame
             try 
         {
             socket = new Socket("127.0.0.1", 12345);
-            clientTalker = new ClientTalker(userID, socket);                  //so we can send messages to the server
-            connectionToClient = new ConnectionToClient(socket, userID);      //so we can receive messages from the server
+            talker = new Talker(socket);                                      // used to send and receive messages from the server
+            connectionToClient = new ConnectionToClient(socket, userID);      // used to create a new thread for each client
         } 
         catch (IOException ex) 
         {
@@ -104,8 +104,8 @@ public class MainFrameGUI extends JFrame
             String message = textField.getText();
             try 
             {
-                clientTalker.sendMessage(message);
-                textField.setText("");                             //clears the text field
+                talker.sendMessage(message);
+                textField.setText("");                             //clears the text
             } catch (IOException ex) 
             {
                 System.out.println("Failed to send message");
