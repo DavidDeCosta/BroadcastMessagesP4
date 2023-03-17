@@ -1,7 +1,7 @@
 import java.net.*;
 import java.io.*;
 
-//represents a client that can send and receive messages to a server
+//represents a client that can send messages to a server
 public class ClientTalker   
 {
   String id;

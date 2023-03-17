@@ -5,10 +5,10 @@ import java.net.*;
 
 
 
-public class ConnectionToClient implements Runnable
+public class ConnectionToClient implements Runnable  // this class is used to receive messages from the server
 {
     ClientTalker clientTalker;
-    String id;
+    String id;  
     Socket normalSocket;
 
     ConnectionToClient(Socket normalSocket, String id) throws IOException
@@ -29,7 +29,6 @@ public class ConnectionToClient implements Runnable
                 String message = in.readLine();               // read message from server
                 if(message !=null)
                 {
-                    System.out.println("ijbhdnawjhkdbhjkawdbn");
                     System.out.println(message);             // print message to console
                 }
                 else

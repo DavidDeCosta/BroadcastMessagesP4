@@ -1,12 +1,8 @@
 import javax.swing.*;
-
-import org.w3c.dom.UserDataHandler;
-
 import java.awt.*;                                 // for Toolkit and Dimension
 import java.awt.event.*;                            // for ActionListener
 import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class MainFrameGUI extends JFrame
                             implements ActionListener
@@ -93,8 +89,8 @@ public class MainFrameGUI extends JFrame
             try 
         {
             socket = new Socket("127.0.0.1", 12345);
-            clientTalker = new ClientTalker(userID, socket);
-            connectionToClient = new ConnectionToClient(socket, userID);
+            clientTalker = new ClientTalker(userID, socket);                  //so we can send messages to the server
+            connectionToClient = new ConnectionToClient(socket, userID);      //so we can receive messages from the server
         } 
         catch (IOException ex) 
         {
@@ -108,7 +104,7 @@ public class MainFrameGUI extends JFrame
             String message = textField.getText();
             try {
                 clientTalker.sendMessage(message);
-                textField.setText(""); //clears the text field
+                textField.setText("");                             //clears the text field
             } catch (IOException ex) {
                 System.out.println("Failed to send message");
             }

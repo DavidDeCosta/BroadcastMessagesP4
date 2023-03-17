@@ -32,11 +32,11 @@ class ConnectionToClient implements Runnable
         {
             try 
             {
-                connection.outStream.writeBytes(id + ": " + message + "\n");  // send the id and message to the client
+                connection.outStream.writeBytes(id + ": " + message + "\n");  // send the id and message to the clients connected
                 connection.outStream.flush();                                 // flush the stream
             } catch (IOException e) 
             {
-                System.out.println("Error writing to client " + connection.id + ": " + e.getMessage());
+                System.out.println("Error writing to client " + connection.id);
             }
         }
         
@@ -49,9 +49,10 @@ class ConnectionToClient implements Runnable
         {
             outStream.writeBytes("Hello Client, I am the Server \n");
             String message;
-            while ((message = instream.readLine()) != null) {
+            while ((message = instream.readLine()) != null) 
+            {
                 System.out.println("Message received from client " + id + ": " + message);
-                broadcastMessage(id, message);  // broadcast the id and message to all clients
+                broadcastMessage(id, message);                                  // broadcast the id and message to all clients
             }
         } catch (IOException e) 
         {
