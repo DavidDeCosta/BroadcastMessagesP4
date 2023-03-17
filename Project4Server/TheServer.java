@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.HashMap;
 
-public class TheServer 
+class TheServer 
 {
     ServerSocket serverSocket;
     Socket clientSocket;
@@ -18,7 +18,7 @@ public class TheServer
 
     HashMap<String, ConnectionToClient> clientConnections;                //HashMap of all the clients connected to the server
 
-    public TheServer()
+    TheServer()
     {
         System.out.println("Server is running...");
         clientConnections = new HashMap<>();                                //initialize the HashMap

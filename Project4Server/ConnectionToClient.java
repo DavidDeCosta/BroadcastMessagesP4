@@ -14,7 +14,7 @@ class ConnectionToClient implements Runnable
     String id;
     HashMap<String, ConnectionToClient> clientConnections;
 
-    public ConnectionToClient(Socket clientSocket, String id,HashMap<String, ConnectionToClient> clientConnections) throws IOException 
+    ConnectionToClient(Socket clientSocket, String id,HashMap<String, ConnectionToClient> clientConnections) throws IOException 
     {
         this.clientSocket = clientSocket;                       
         this.id = id;                                           
@@ -26,14 +26,15 @@ class ConnectionToClient implements Runnable
     }
 
 
-    public void broadcastMessage(String id, String message) 
+    void broadcastMessage(String id, String message) 
     {
         for (ConnectionToClient connection : clientConnections.values())         // loop through all the clients connected to the server
         {
             try 
             {
                 connection.outStream.writeBytes(id + ": " + message + "\n");      // send the id and message to the clients connected
-            } catch (IOException e) 
+            } 
+            catch (IOException e) 
             {
                 System.out.println("Error writing to client " + connection.id);
             }
@@ -53,9 +54,11 @@ class ConnectionToClient implements Runnable
                 System.out.println("Message received from client " + id + ": " + message);
                 broadcastMessage(id, message);                                  // broadcast the id and message to all clients
             }
-        } catch (IOException e) 
+        } 
+        catch (IOException e) 
         {
-            System.out.println("Error reading or writing to client: " + e.getMessage());
+            System.out.println("Error reading or writing to client (" + id + "): " + e.getMessage());
+            clientConnections.remove(id);                                       // remove the client from the HashMap if they disconnect
         }
     }
 }

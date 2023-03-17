@@ -4,13 +4,12 @@ import java.awt.event.*;                            // for ActionListener
 import java.io.IOException;
 import java.net.Socket;
 
-public class MainFrameGUI extends JFrame
+class MainFrameGUI extends JFrame
                             implements ActionListener
 {
 
     Toolkit toolkit;
     Dimension screenSize;
-
     JDialog dialog;
     JTextField textField;
     JTextField fieldForDialog;
@@ -22,10 +21,8 @@ public class MainFrameGUI extends JFrame
     JPanel panel2;
     JPanel panel3;
     String userID;
-
     Socket socket;
     ConnectionToClient connectionToClient;
-
     Talker talker;
 
     MainFrameGUI()
@@ -37,11 +34,11 @@ public class MainFrameGUI extends JFrame
 
     void buildMainFrame()
     {
-        toolkit = Toolkit.getDefaultToolkit();               // used to help get the users screen size
-        screenSize = toolkit.getScreenSize();                               //get the users screen size
+        toolkit = Toolkit.getDefaultToolkit();                                    // used to help get the users screen size
+        screenSize = toolkit.getScreenSize();                                     //get the users screen size
         setSize((screenSize.width/2 + 70), (screenSize.height/2 + 70));           
-        setLocationRelativeTo(null);                                              // window is placed in the center of screen
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                             //when close frame the program stops
+        setLocationRelativeTo(null);                                           // window is placed in the center of screen
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                          //when close frame the program stops
         setTitle("Project 4");
         setVisible(true);
     }
@@ -58,10 +55,10 @@ public class MainFrameGUI extends JFrame
         panel3.add(connect);
         dialog.add(panel3);
 
-        dialog.setLocationRelativeTo(null);
+        dialog.setLocationRelativeTo(null);                                  // makes the dialog box position be in the center of screen
         dialog.setSize(400,400);
         dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL); 
+        dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);         //makes the dialog box show up on top of the mainframe
         dialog.setVisible(true);
 
     }
@@ -76,6 +73,7 @@ public class MainFrameGUI extends JFrame
         send = new JButton("Send");
         send.addActionListener(this);
         exit = new JButton("Exit");
+        exit.addActionListener(this);
         panel1.add(send);
         panel1.add(exit);
     }
@@ -101,16 +99,27 @@ public class MainFrameGUI extends JFrame
         }
         else if(e.getActionCommand().equals("Send"))
         {
-            String message = textField.getText();
+            String message = textField.getText().trim();
+            if(message.isEmpty())                // if the message is empty then do nothing
+            {
+                return;
+            }
             try 
             {
                 talker.sendMessage(message);
                 textField.setText("");                             //clears the text
-            } catch (IOException ex) 
+
+            } 
+            catch (IOException ex) 
             {
                 System.out.println("Failed to send message");
             }
-        }     
+        }
+        else if(e.getActionCommand().equals("Exit"))
+        {
+            System.exit(0);
+        }
+        
     }
-
+    
 }

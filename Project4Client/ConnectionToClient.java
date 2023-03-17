@@ -1,9 +1,7 @@
 import java.io.IOException;
 import java.net.*;
 
-
-
-public class ConnectionToClient implements Runnable  // this class is used to create a new thread for each client
+class ConnectionToClient implements Runnable  // this class is used to create a new thread for each client
 {
     String id;                  // this is the id of the client
     Socket normalSocket;        
