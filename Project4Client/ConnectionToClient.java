@@ -4,15 +4,15 @@ import java.net.*;
 class ConnectionToClient implements Runnable  // this class is used to create a new thread for each client
 {
     String id;                  // this is the id of the client
-    Socket normalSocket;        
+    Socket normalSocket;        // socket used to communicate with client
 
     Talker talker;
     ConnectionToClient(Socket normalSocket, String id) throws IOException
     {
         this.normalSocket = normalSocket;
-        talker = new Talker(normalSocket);
-        talker.sendMessage(id);           
-        new Thread(this).start();                                        // start a new thread
+        talker = new Talker(normalSocket);                                // create a talker for this client 
+        talker.sendMessage(id);                                           //send the id to the server                           
+        new Thread(this).start();                                        //client gets its own thread
     }
 
     @Override
@@ -22,7 +22,7 @@ class ConnectionToClient implements Runnable  // this class is used to create a 
         {
             while (true) 
             {
-                talker.receiveMessage();
+                talker.receiveMessage();                        //always ready to receive message from server
             } 
         }
         catch (IOException e) 

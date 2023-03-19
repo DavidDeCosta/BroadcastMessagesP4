@@ -36,7 +36,7 @@ class ConnectionToClient implements Runnable
             } 
             catch (IOException e) 
             {
-                System.out.println("Error writing to client " + connection.id);
+                System.out.println("problem writing to client " + connection.id);
             }
         }
         

@@ -16,7 +16,7 @@ class TheServer
     String clientID;
     ConnectionToClient connection;
 
-    HashMap<String, ConnectionToClient> clientConnections;                //HashMap of all the clients connected to the server
+    HashMap<String, ConnectionToClient> clientConnections;                //HashMap of all the clients connected to the server that contains their id and their connection
 
     TheServer()
     {
@@ -37,7 +37,7 @@ class TheServer
 //            System.out.println("Before accept");
             clientSocket = serverSocket.accept();                                                     //clientSocket is the socket that connects to the client
 //            System.out.println("After accept");
-            instream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            instream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));      
             clientID = instream.readLine();                                                           //read the id of the client
             System.out.println("Client: " + clientID + " connected! ");                                     
             connection = new ConnectionToClient(clientSocket,clientID,clientConnections);             //create that clients personal connection

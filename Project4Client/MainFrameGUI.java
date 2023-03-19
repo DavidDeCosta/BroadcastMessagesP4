@@ -93,6 +93,8 @@ class MainFrameGUI extends JFrame
         catch (IOException ex) 
         {
             System.out.println("Failed to connect to server");
+            JOptionPane.showMessageDialog(null, "Failed to connect", "Could Not Connect", JOptionPane.ERROR_MESSAGE);
+           System.exit(0);
         }
 
             dialog.dispose();
@@ -107,7 +109,7 @@ class MainFrameGUI extends JFrame
             try 
             {
                 talker.sendMessage(message);
-                textField.setText("");                             //clears the text
+                textField.setText("");                             //clears the text after sending
 
             } 
             catch (IOException ex) 
