@@ -78,30 +78,28 @@ class MainFrameGUI extends JFrame
         panel1.add(exit);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) 
+    void handleConnect()
     {
-        if(e.getActionCommand().equals("Connect"))
-        {
-            userID = fieldForDialog.getText();
-            try 
-        {
-            socket = new Socket("127.0.0.1", 12345);
-            talker = new Talker(socket);                                      // used to send and receive messages from the server
-            connectionToClient = new ConnectionToClient(socket, userID);      // used to create a new thread for each client
-        } 
-        catch (IOException ex) 
-        {
-            System.out.println("Failed to connect to server");
-            JOptionPane.showMessageDialog(null, "Failed to connect", "Could Not Connect", JOptionPane.ERROR_MESSAGE);
-           System.exit(0);
-        }
+        userID = fieldForDialog.getText();
+        try 
+    {
+        socket = new Socket("127.0.0.1", 12345);
+        talker = new Talker(socket);                                      // used to send and receive messages from the server
+        connectionToClient = new ConnectionToClient(socket, userID);      // used to create a new thread for each client
+    } 
+    catch (IOException ex) 
+    {
+        System.out.println("Failed to connect to server");
+        JOptionPane.showMessageDialog(null, "Failed to connect", "Could Not Connect", JOptionPane.ERROR_MESSAGE);
+       System.exit(0);
+    }
 
-            dialog.dispose();
-        }
-        else if(e.getActionCommand().equals("Send"))
-        {
-            String message = textField.getText().trim();
+        dialog.dispose();
+    }
+
+    void handleSend()
+    {
+        String message = textField.getText().trim();
             if(message.isEmpty())                // if the message is empty then do nothing
             {
                 return;
@@ -116,6 +114,18 @@ class MainFrameGUI extends JFrame
             {
                 System.out.println("Failed to send message");
             }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) 
+    {
+        if(e.getActionCommand().equals("Connect"))
+        {
+            handleConnect();
+        }
+        else if(e.getActionCommand().equals("Send"))
+        {
+            handleSend();
         }
         else if(e.getActionCommand().equals("Exit"))
         {
